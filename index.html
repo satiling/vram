@@ -26,18 +26,18 @@
   .hero .badge{display:inline-block;font-size:15px;letter-spacing:.12em;color:var(--cyan);
     border:1px solid rgba(62,198,255,.35);background:rgba(62,198,255,.08);
     padding:6px 16px;border-radius:999px;margin-bottom:18px}
-  h1{font-size:52px;font-weight:800;letter-spacing:.01em;line-height:1.15;
+  h1{font-size:30px;font-weight:800;letter-spacing:.01em;line-height:1.15;
     background:linear-gradient(120deg,#fff 10%,var(--cyan) 55%,var(--purple) 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
-  .hero .sub{font-size:21px;color:var(--muted);max-width:880px;margin:0 auto 22px}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px}
+    -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px}
+  .hero .sub{font-size:14px;color:var(--muted);max-width:880px;margin:0 auto 14px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
   .stat{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
-    border-radius:18px;padding:22px 20px;text-align:center;position:relative;overflow:hidden}
+    border-radius:14px;padding:14px 16px;text-align:center;position:relative;overflow:hidden}
   .stat::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;
     background:linear-gradient(90deg,var(--cyan),var(--purple))}
-  .stat .v{font-size:44px;font-weight:800;color:#fff;line-height:1.1}
-  .stat .v small{font-size:20px;color:var(--cyan);font-weight:700}
-  .stat .l{font-size:17px;color:var(--muted);margin-top:6px;letter-spacing:.05em}
+  .stat .v{font-size:26px;font-weight:800;color:#fff;line-height:1.1}
+  .stat .v small{font-size:14px;color:var(--cyan);font-weight:700}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.05em}
   .sec-title{display:flex;align-items:center;gap:14px;margin:10px 0 18px}
   .sec-title .dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
   .sec-title h2{font-size:30px;font-weight:800}
@@ -87,14 +87,14 @@
   .foot b{color:var(--txt)}
   .foot .warn{color:var(--gold)}
   @media(max-width:900px){
-    body{font-size:17px;padding:24px 14px 60px}
-    h1{font-size:34px}
+    body{font-size:13px;padding:16px 12px 40px}
+    h1{font-size:24px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .stat .v{font-size:32px}
-    .bar-row{grid-template-columns:120px 1fr 56px;font-size:14px}
+    .stat .v{font-size:22px}
+    .bar-row{grid-template-columns:110px 1fr 50px;font-size:12px}
     table{display:block;overflow-x:auto;white-space:nowrap}
-    thead th,tbody td{padding:12px 10px;font-size:16px}
-    .mem{font-size:24px}
+    thead th,tbody td{padding:6px 8px;font-size:13px}
+    .mem{font-size:18px}
   }
 </style>
 </head>
@@ -169,13 +169,16 @@ const DATA = [
   {v:"NVIDIA",c:"#76b900",name:"B300",sub:"Blackwell Ultra",mem:288,t:"HBM3e",bw:"8 TB/s",fp:"~15 PF FP4",y:"2026",p:"1400 W",n:"GB300 NVL72 单卡"},
   {v:"NVIDIA",c:"#76b900",name:"B200",sub:"Blackwell",mem:192,t:"HBM3e",bw:"8 TB/s",fp:"4.5 PF FP4",y:"2025",p:"1000 W",n:"旗舰训练卡"},
   {v:"NVIDIA",c:"#76b900",name:"H200",sub:"Hopper",mem:141,t:"HBM3e",bw:"4.8 TB/s",fp:"~2 PF FP8",y:"2024",p:"700 W",n:"H100 显存升级版"},
+  {v:"NVIDIA",c:"#76b900",name:"H100 NVL",sub:"Hopper·LLM推理",mem:94,t:"HBM3",bw:"3.9 TB/s",fp:"~1.8 PF FP8",y:"2023",p:"350 W",n:"双卡版(NVL 94GB)"},
   {v:"NVIDIA",c:"#76b900",name:"H100",sub:"Hopper SXM",mem:80,t:"HBM3",bw:"3.35 TB/s",fp:"~2 PF FP8",y:"2022",p:"700 W",n:"一代主力训练卡"},
-  {v:"NVIDIA",c:"#76b900",name:"A100",sub:"Ampere 80G",mem:80,t:"HBM2e",bw:"2.0 TB/s",fp:"312 TF FP16",y:"2020",p:"400 W",n:"上一代主力"},
+  {v:"NVIDIA",c:"#76b900",name:"A100 80GB",sub:"Ampere",mem:80,t:"HBM2e",bw:"2.0 TB/s",fp:"312 TF FP16",y:"2020",p:"400 W",n:"上一代主力"},
+  {v:"NVIDIA",c:"#76b900",name:"A100 40GB",sub:"Ampere",mem:40,t:"HBM2",bw:"1.55 TB/s",fp:"312 TF FP16",y:"2020",p:"400 W",n:"上一代低显存版"},
   {v:"NVIDIA",c:"#76b900",name:"L40S",sub:"Ada",mem:48,t:"GDDR6",bw:"864 GB/s",fp:"~733 TF FP8",y:"2023",p:"350 W",n:"推理/图形双用"},
   {v:"NVIDIA",c:"#76b900",name:"L4",sub:"Ada",mem:24,t:"GDDR6",bw:"300 GB/s",fp:"~121 TF FP16",y:"2023",p:"72 W",n:"低功耗推理"},
   {v:"NVIDIA",c:"#76b900",name:"A40",sub:"Ampere",mem:48,t:"GDDR6",bw:"696 GB/s",fp:"149 TF FP16",y:"2020",p:"300 W",n:"图形+推理"},
   {v:"NVIDIA",c:"#76b900",name:"RTX PRO 6000",sub:"Blackwell Server",mem:96,t:"GDDR7",bw:"1.79 TB/s",fp:"126 TF FP16",y:"2025",p:"600 W",n:"服务器版"},
-  {v:"NVIDIA",c:"#76b900",name:"H20",sub:"中国特供 Hopper",mem:96,t:"HBM3",bw:"4.0 TB/s",fp:"~148 TF FP16",y:"2024",p:"400 W",n:"合规降配版"},
+  {v:"NVIDIA",c:"#76b900",name:"H20 NVL",sub:"中国特供·升级版",mem:141,t:"HBM3e",bw:"4.0 TB/s",fp:"148 TF FP16",y:"2025",p:"400 W",n:"H20 大显存版"},
+  {v:"NVIDIA",c:"#76b900",name:"H20",sub:"中国特供 Hopper",mem:96,t:"HBM3",bw:"4.0 TB/s",fp:"148 TF FP16",y:"2024",p:"400 W",n:"合规降配版"},
 
   // —— AMD ——
   {v:"AMD",c:"#ed1c24",name:"MI355X",sub:"CDNA 4",mem:288,t:"HBM3e",bw:"8 TB/s",fp:"9.2 PF FP6",y:"2025",p:"1400 W",n:"2025 发布"},
