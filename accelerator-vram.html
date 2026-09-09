@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="Gw8sIFyJA4FSokMfpQFF39">
+<head data-page-node-id="juToiGkMzqxhzsXLo15xYH">
+<meta charset="UTF-8" data-page-node-id="LbUxdfgVUu3JBEI4Fdpt4o">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="RFotjdMBbWNcswCbic4C6k">
+<title>智算卡显存速查大全 · AI加速卡显存一览</title>
+<style>
+  :root{
+    --bg:#070b14;--bg2:#0b1220;--panel:#111a2c;--panel2:#0e1626;
+    --line:#1e2a44;--line2:#2a3a5e;--txt:#e8eefc;--muted:#8ba0c4;--dim:#5c6f92;
+    --cyan:#3ec6ff;--blue:#4d8dff;--green:#38d9a9;--gold:#ffc94d;--purple:#b78cff;
+    --red:#ff6b6b;--pink:#ff7ad9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(62,198,255,.08), transparent 60%),
+      radial-gradient(900px 500px at 10% 0%, rgba(183,140,255,.07), transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+    font-size:20px;line-height:1.6;min-height:100vh;padding:40px 24px 80px;
+  }
+  .wrap{max-width:1480px;margin:0 auto}
+  .hero{text-align:center;margin-bottom:36px}
+  .hero .badge{display:inline-block;font-size:15px;letter-spacing:.12em;color:var(--cyan);
+    border:1px solid rgba(62,198,255,.35);background:rgba(62,198,255,.08);
+    padding:6px 16px;border-radius:999px;margin-bottom:18px}
+  h1{font-size:52px;font-weight:800;letter-spacing:.01em;line-height:1.15;
+    background:linear-gradient(120deg,#fff 10%,var(--cyan) 55%,var(--purple) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
+  .hero .sub{font-size:21px;color:var(--muted);max-width:880px;margin:0 auto 22px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px}
+  .stat{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:18px;padding:22px 20px;text-align:center;position:relative;overflow:hidden}
+  .stat::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--purple))}
+  .stat .v{font-size:44px;font-weight:800;color:#fff;line-height:1.1}
+  .stat .v small{font-size:20px;color:var(--cyan);font-weight:700}
+  .stat .l{font-size:17px;color:var(--muted);margin-top:6px;letter-spacing:.05em}
+  .sec-title{display:flex;align-items:center;gap:14px;margin:10px 0 18px}
+  .sec-title .dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  .sec-title h2{font-size:30px;font-weight:800}
+  .sec-title .n{font-size:16px;color:var(--muted);background:var(--panel);border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+  .chart-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:20px;padding:26px 26px 20px;margin-bottom:34px}
+  .chart-card h3{font-size:23px;font-weight:800;margin-bottom:4px}
+  .chart-card .hint{font-size:16px;color:var(--dim);margin-bottom:20px}
+  .bar-row{display:grid;grid-template-columns:230px 1fr 74px;align-items:center;gap:14px;margin-bottom:12px;font-size:17px}
+  .bar-row .name{color:var(--txt);font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{background:var(--panel2);border:1px solid var(--line);border-radius:8px;height:26px;overflow:hidden;position:relative}
+  .bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s ease}
+  .bar-row .val{font-weight:800;color:var(--gold);font-size:18px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:24px}
+  .search{flex:1 1 340px;position:relative}
+  .search input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    color:var(--txt);font-size:19px;padding:14px 18px 14px 46px;outline:none}
+  .search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(62,198,255,.12)}
+  .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:var(--muted)}
+  .filters{display:flex;flex-wrap:wrap;gap:10px}
+  select{background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--txt);
+    font-size:18px;padding:13px 16px;outline:none;cursor:pointer}
+  select:focus{border-color:var(--cyan)}
+  .table-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  thead th{position:sticky;top:0;background:#0d1526;color:var(--muted);font-size:16px;font-weight:700;
+    text-align:left;padding:16px 14px;border-bottom:2px solid var(--line2);letter-spacing:.04em;white-space:nowrap}
+  thead th.sortable{cursor:pointer;user-select:none}
+  thead th.sortable:hover{color:var(--cyan)}
+  tbody td{padding:16px 14px;border-bottom:1px solid var(--line);font-size:18px;vertical-align:middle}
+  tbody tr:hover{background:rgba(62,198,255,.04)}
+  tbody tr:last-child td{border-bottom:none}
+  .vendor-badge{display:inline-block;font-size:15px;font-weight:700;padding:4px 12px;border-radius:8px;white-space:nowrap;color:#06121f}
+  .model{font-weight:700;font-size:19px;color:#fff}
+  .model .sub{display:block;font-size:15px;color:var(--dim);font-weight:400;margin-top:2px}
+  .mem{font-size:30px;font-weight:800;line-height:1;letter-spacing:-.01em}
+  .mem small{font-size:17px;font-weight:700;color:var(--muted)}
+  .memtype{font-size:16px;color:var(--muted)}
+  .bw{font-size:17px;color:var(--txt)}
+  .bw small{color:var(--dim)}
+  .fp{font-size:16px;color:var(--muted);max-width:170px}
+  .meta{font-size:15px;color:var(--dim)}
+  .note{font-size:15px;color:var(--muted);max-width:240px}
+  .t-0{color:#8ba0c4}.t-1{color:var(--blue)}.t-2{color:var(--cyan)}.t-3{color:var(--green)}.t-4{color:var(--gold)}.t-5{color:var(--purple)}
+  .empty{text-align:center;padding:60px;color:var(--muted);font-size:20px}
+  .foot{margin-top:34px;padding:26px;background:var(--panel);border:1px solid var(--line);border-radius:16px;font-size:16px;color:var(--muted);line-height:1.8}
+  .foot b{color:var(--txt)}
+  .foot .warn{color:var(--gold)}
+  @media(max-width:900px){
+    body{font-size:17px;padding:24px 14px 60px}
+    h1{font-size:34px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat .v{font-size:32px}
+    .bar-row{grid-template-columns:120px 1fr 56px;font-size:14px}
+    table{display:block;overflow-x:auto;white-space:nowrap}
+    thead th,tbody td{padding:12px 10px;font-size:16px}
+    .mem{font-size:24px}
+  }
+</style>
+</head>
+<body data-page-node-id="cAYWuuSAqXcv4IXAWFCyju">
+<div class="wrap" data-page-node-id="gK1hG4GEos3MExc1Fot9eJ">
+  <div class="hero" data-page-node-id="BP5kXT9oi7kk2O9xzilpHO">
+    <div class="badge" data-page-node-id="oStB4FGE3AI50vZcNShnG1">AI ACCELERATOR · VRAM REFERENCE</div>
+    <h1 data-page-node-id="ADCMwV1s5vlP92x1pMEHoT">智算卡显存速查大全</h1>
+    <p class="sub" data-page-node-id="wUNuwssWMgE8sLPiFBI8l8">收录全球主流 AI 加速卡 / 智算芯片的单卡显存规格，覆盖英伟达、AMD、华为昇腾、寒武纪、海光、壁仞、沐曦、燧原、天数智芯、摩尔线程、昆仑芯、Google TPU、AWS、微软、Cerebras 等 15+ 家厂商</p>
+  </div>
+  <div class="stats" data-page-node-id="ACPIu41pvqTNsuu4aUo5B8">
+    <div class="stat" data-page-node-id="wl4dCR9Hze9jKMZ8HtcO2P"><div class="v" id="statCount" data-page-node-id="012HSE6YsCBJLJDR99ahN7">—</div><div class="l" data-page-node-id="vFAHbH0FkfwufkSZEhCoOr">收录智算卡型号</div></div>
+    <div class="stat" data-page-node-id="NYHkTshDrGwWDzWIWPWvKE"><div class="v" id="statVendor" data-page-node-id="ECY2ok7pT47n2zZDVJJCsG">—</div><div class="l" data-page-node-id="P9hLDaRIfBpcnHodkqo4Bk">覆盖厂商</div></div>
+    <div class="stat" data-page-node-id="ZELBseUOUxK4esruzKSvHU"><div class="v" id="statMax" data-page-node-id="vNpKu0o00wuX69rVWwEm8T">—</div><div class="l" data-page-node-id="uUBcHrpdS1tOEaDflX8c8e">单卡最大显存</div></div>
+    <div class="stat" data-page-node-id="cNFn8XyhThHOmhBM9fuJGU"><div class="v" id="statAvg" data-page-node-id="0Ril2iulV5BG1qPZhtha6a">—</div><div class="l" data-page-node-id="xz9STGq40SbSpyV3Qv8ydc">平均显存容量</div></div>
+  </div>
+  <div class="sec-title" data-page-node-id="VECbCjH3AcveD0H8ft7Umt"><span class="dot" data-page-node-id="O0qS3lbobej7GiBEqA3WwO"></span><h2 data-page-node-id="wmCnFWVf1CAoisXXP4yqoi">显存容量排行榜</h2><span class="n" data-page-node-id="s7lwTEyCcI1bUAsv9P3yBs">TOP 20 · 按显存大小</span></div>
+  <div class="chart-card" data-page-node-id="AK8OU3FzoCRW8GUMzrd7LW">
+    <h3 data-page-node-id="ajcGPmXHpGiClNqNSyhXae">谁是"显存之王"？</h3>
+    <div class="hint" data-page-node-id="HWxSnwc33X05MvOxRleGiO">按单卡显存容量降序排列，条长 = 显存大小（GB）</div>
+    <div id="chart" data-page-node-id="xvTpB0U9phIIlEsGZf2HKS"></div>
+  </div>
+  <div class="sec-title" data-page-node-id="hyU20xYVATOvYlt8SHUTiJ"><span class="dot" data-page-node-id="VOD23shGo9vuFJ6lZhF8Fk"></span><h2 data-page-node-id="4pi14297XTPXeuRchwgx05">完整速查表</h2><span class="n" id="tableCount" data-page-node-id="UYEra0vg7hB0pIjWtTcoWv">—</span></div>
+  <div class="toolbar" data-page-node-id="yvjUakWq95CD4xu1eCIQUz">
+    <div class="search" data-page-node-id="chshfWsxJXw3Qw5GnqzU1j">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" data-page-node-id="oHmqpgE1FfTiXGgfKSpgOq"><circle cx="11" cy="11" r="7" data-page-node-id="n0V36G9qouXSfHeoiGZIl0"/><path d="m20 20-3.5-3.5" data-page-node-id="i9Rfce6oNVOjQwRwO1vy5e"/></svg>
+      <input id="q" type="text" placeholder="搜索型号，如 H100 / 昇腾910B / MI300X …" data-page-node-id="aRGm3Sb2DpEIAgXATui5Md">
+    </div>
+    <div class="filters" data-page-node-id="Ez3m3WEjfmDAD1c5kXXtmW">
+      <select id="fVendor" data-page-node-id="uxEc8lJOE4NG4wHHImIvbI"><option value="" data-page-node-id="92ECYmAMrS8XZwaDrDe9iG">全部厂商</option></select>
+      <select id="fType" data-page-node-id="3WKyJqZgfEH3N8fPPrkEgS"><option value="" data-page-node-id="35EYGIJLdc9pKCImzOC2xF">全部显存类型</option></select>
+      <select id="fTier" data-page-node-id="WRW19ErXlYGHYwHj9Qkq8t">
+        <option value="" data-page-node-id="W252D3uydpzQHFidcI7ScN">全部显存梯队</option>
+        <option value="0" data-page-node-id="lvGq5evApmSyulmip9F8a9">&lt; 32 GB</option>
+        <option value="1" data-page-node-id="jYYsCyKXW3fuYaHxkq8zo5">32 – 63 GB</option>
+        <option value="2" data-page-node-id="yeBmbg9B7MRlfWYI3DfjqB">64 – 127 GB</option>
+        <option value="3" data-page-node-id="QW4jYC6jynuymUxmk6ggCe">128 – 191 GB</option>
+        <option value="4" data-page-node-id="RCRNTa2cKZZw1tvhlqfsPb">192 – 287 GB</option>
+        <option value="5" data-page-node-id="5XvuEA0vLP7NF2CRlqyG9p">≥ 288 GB</option>
+      </select>
+      <select id="fSort" data-page-node-id="BTCZxQQBR0ZVimCnNOipAT">
+        <option value="mem-desc" data-page-node-id="eRDAh7oWzcqtnY8XtDLAPK">显存 ↓ 从大到小</option>
+        <option value="mem-asc" data-page-node-id="AH1odf8hpef95YKBUMxtmJ">显存 ↑ 从小到大</option>
+        <option value="vendor" data-page-node-id="VkAqNt4Cv0Bt4JiAii3D0d">按厂商分组</option>
+        <option value="year-desc" data-page-node-id="UqHrxIODoF9Pv8HCqjuCkG">发布时间 ↓ 新到旧</option>
+      </select>
+    </div>
+  </div>
+  <div class="table-card" data-page-node-id="vrxQmUHQ2czHpCMTS45rzv">
+    <table data-page-node-id="F0mPxXuZYx0SIafpfjCkAC">
+      <thead data-page-node-id="6XWNrFz1LwyT6j1jhgKmJ8">
+        <tr data-page-node-id="2t2tgUsRj1dgxMBKTwENFj">
+          <th data-page-node-id="Jp5ab6WZ3ZENRHnNQc9NYF">厂商</th><th data-page-node-id="QcH5raYNY0AIivBhiRsBQY">型号</th><th class="sortable" data-sort="mem" data-page-node-id="y8XiDPQJQuovA4JSXSrZ8D">显存 <span class="arr" data-page-node-id="YAZn6SNIt1lLPe9D5CNipn"></span></th>
+          <th data-page-node-id="J5YuyZ6dBp7liuwSokXw3B">显存类型</th><th data-page-node-id="sjd4MYQkfxM4iopAVUaamj">显存带宽</th><th data-page-node-id="dtBJXscZ1tJ1XmQLpGzyvM">算力</th><th data-page-node-id="QhJ8EDVDbeLC5kxY422cqM">发布 / 功耗</th><th data-page-node-id="bGMyneS5NO5IK4Q8SPmBY4">定位 / 备注</th>
+        </tr>
+      </thead>
+      <tbody id="tbody" data-page-node-id="Wr4ddUBh28elxwCawqzBWo"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none" data-page-node-id="bhHj9xkMWAfbVJsjPbR3O3">未找到匹配的智算卡，请调整搜索或筛选条件。</div>
+  </div>
+  <div class="foot" data-page-node-id="2aYmE16Q6O4h4pvIfemQkO">
+    <p data-page-node-id="uukH8CwansNx90fjMordgs"><b data-page-node-id="eh44yPfrb6sNvrD1RZbRB0">数据说明：</b>本表以「单卡 / 单芯片显存容量」为统计口径（GB）。HBM 系列为高带宽内存，GDDR 为显存颗粒，LPDDR 为低功耗内存，自研 HBM（华为 HiBL / HiZQ）与片上 SRAM（Cerebras / Groq）为异构架构的特殊形态。</p>
+    <p class="warn" data-page-node-id="wMxgBctMsyxrzLNI4MIHkg">⚠ 部分型号（昇腾 950/960/970、思元 590 部分版本、B300、MI350 等）存在不同公开资料口径，或属厂商路线图规划 / 估算值，实际以官方发布为准。标注「双芯 / 双 Die / 整机」的型号显存为合计值。</p>
+    <p style="margin-top:8px;color:var(--dim)" data-page-node-id="s8cPa5bFFc4rEcHJ832Hja">数据更新时间：2026-09 · 主要来源：各厂商官网、华为全联接大会 2025 路线图、Google Cloud TPU 文档、公开评测数据库。</p>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  // —— NVIDIA ——
+  {v:"NVIDIA",c:"#76b900",name:"GB200",sub:"双 B200 Die 合封",mem:384,t:"HBM3e",bw:"16 TB/s",fp:"~40 PF FP4",y:"2025",p:"2700 W",n:"Grace Blackwell 超级芯片"},
+  {v:"NVIDIA",c:"#76b900",name:"B300",sub:"Blackwell Ultra",mem:288,t:"HBM3e",bw:"8 TB/s",fp:"~15 PF FP4",y:"2026",p:"1400 W",n:"GB300 NVL72 单卡"},
+  {v:"NVIDIA",c:"#76b900",name:"B200",sub:"Blackwell",mem:192,t:"HBM3e",bw:"8 TB/s",fp:"4.5 PF FP4",y:"2025",p:"1000 W",n:"旗舰训练卡"},
+  {v:"NVIDIA",c:"#76b900",name:"H200",sub:"Hopper",mem:141,t:"HBM3e",bw:"4.8 TB/s",fp:"~2 PF FP8",y:"2024",p:"700 W",n:"H100 显存升级版"},
+  {v:"NVIDIA",c:"#76b900",name:"H100",sub:"Hopper SXM",mem:80,t:"HBM3",bw:"3.35 TB/s",fp:"~2 PF FP8",y:"2022",p:"700 W",n:"一代主力训练卡"},
+  {v:"NVIDIA",c:"#76b900",name:"A100",sub:"Ampere 80G",mem:80,t:"HBM2e",bw:"2.0 TB/s",fp:"312 TF FP16",y:"2020",p:"400 W",n:"上一代主力"},
+  {v:"NVIDIA",c:"#76b900",name:"L40S",sub:"Ada",mem:48,t:"GDDR6",bw:"864 GB/s",fp:"~733 TF FP8",y:"2023",p:"350 W",n:"推理/图形双用"},
+  {v:"NVIDIA",c:"#76b900",name:"L4",sub:"Ada",mem:24,t:"GDDR6",bw:"300 GB/s",fp:"~121 TF FP16",y:"2023",p:"72 W",n:"低功耗推理"},
+  {v:"NVIDIA",c:"#76b900",name:"A40",sub:"Ampere",mem:48,t:"GDDR6",bw:"696 GB/s",fp:"149 TF FP16",y:"2020",p:"300 W",n:"图形+推理"},
+  {v:"NVIDIA",c:"#76b900",name:"RTX PRO 6000",sub:"Blackwell Server",mem:96,t:"GDDR7",bw:"1.79 TB/s",fp:"126 TF FP16",y:"2025",p:"600 W",n:"服务器版"},
+  {v:"NVIDIA",c:"#76b900",name:"H20",sub:"中国特供 Hopper",mem:96,t:"HBM3",bw:"4.0 TB/s",fp:"~148 TF FP16",y:"2024",p:"400 W",n:"合规降配版"},
+
+  // —— AMD ——
+  {v:"AMD",c:"#ed1c24",name:"MI355X",sub:"CDNA 4",mem:288,t:"HBM3e",bw:"8 TB/s",fp:"9.2 PF FP6",y:"2025",p:"1400 W",n:"2025 发布"},
+  {v:"AMD",c:"#ed1c24",name:"MI350X",sub:"CDNA 4",mem:288,t:"HBM3e",bw:"8 TB/s",fp:"~4.6 PF FP8",y:"2025",p:"1000 W",n:"MI300X 继任者"},
+  {v:"AMD",c:"#ed1c24",name:"MI325X",sub:"CDNA 3",mem:256,t:"HBM3e",bw:"6 TB/s",fp:"2.6 PF FP8",y:"2024",p:"1000 W",n:"显存加大版"},
+  {v:"AMD",c:"#ed1c24",name:"MI300X",sub:"CDNA 3",mem:192,t:"HBM3",bw:"5.3 TB/s",fp:"2.6 PF FP8",y:"2023",p:"750 W",n:"对标 H100"},
+  {v:"AMD",c:"#ed1c24",name:"MI300A",sub:"APU(CPU+GPU)",mem:128,t:"HBM3",bw:"5.3 TB/s",fp:"~2 PF FP8",y:"2023",p:"760 W",n:"统一内存 APU"},
+  {v:"AMD",c:"#ed1c24",name:"MI250X",sub:"CDNA 2",mem:128,t:"HBM2e",bw:"3.2 TB/s",fp:"383 TF FP16",y:"2021",p:"560 W",n:"双 GCD"},
+
+  // —— 华为昇腾 ——
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 910C",sub:"双 Die 合封",mem:128,t:"HBM2e",bw:"3.2 TB/s",fp:"800 TF FP16",y:"2025",p:"600 W",n:"当前主力训推"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 910B",sub:"双 Die Chiplet",mem:64,t:"HBM2e",bw:"1.6 TB/s",fp:"400 TF FP16",y:"2023",p:"310 W",n:"国产训练主力"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 910",sub:"达芬奇架构",mem:32,t:"HBM2",bw:"1.2 TB/s",fp:"256 TF FP16",y:"2019",p:"310 W",n:"首款对标 V100"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 310",sub:"推理",mem:8,t:"LPDDR4X",bw:"51.2 GB/s",fp:"16 TOPS INT8",y:"2018",p:"8 W",n:"边缘推理"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 950PR",sub:"自研 HiBL 1.0",mem:128,t:"HBM(自研)",bw:"1.6 TB/s",fp:"1 PF FP8",y:"2026",p:"600 W",n:"路线图·推理"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 950DT",sub:"自研 HiZQ 2.0",mem:144,t:"HBM(自研)",bw:"4 TB/s",fp:"1 PF FP8",y:"2026",p:"600 W",n:"路线图·训练"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 960",sub:"路线图",mem:288,t:"HBM(自研)",bw:"9.6 TB/s",fp:"2 PF FP8",y:"2027",p:"—",n:"路线图规划"},
+  {v:"华为昇腾",c:"#c7000b",name:"昇腾 970",sub:"路线图",mem:288,t:"HBM(自研)",bw:"14.4 TB/s",fp:"4 PF FP8",y:"2028",p:"—",n:"路线图规划"},
+
+  // —— 寒武纪 ——
+  {v:"寒武纪",c:"#0088cc",name:"思元 590",sub:"MLU590",mem:96,t:"HBM2e",bw:"1.23 TB/s",fp:"384 TF FP16",y:"2023",p:"350 W",n:"推理落地主力"},
+  {v:"寒武纪",c:"#0088cc",name:"思元 370",sub:"MLU370-X8",mem:48,t:"LPDDR5",bw:"614 GB/s",fp:"256 TF FP16",y:"2021",p:"250 W",n:"成熟推理"},
+  {v:"寒武纪",c:"#0088cc",name:"思元 290",sub:"MLU290-M5",mem:64,t:"HBM2",bw:"1.0 TB/s",fp:"512 TOPS INT8",y:"2020",p:"350 W",n:"训练卡"},
+
+  // —— 海光 ——
+  {v:"海光",c:"#e60012",name:"深算 K100",sub:"DCU(类CUDA)",mem:64,t:"HBM2e",bw:"896 GB/s",fp:"196 TF FP16",y:"2023",p:"350 W",n:"x86 信创"},
+  {v:"海光",c:"#e60012",name:"深算 BW100",sub:"DCU",mem:64,t:"HBM2e",bw:"640 GB/s",fp:"400 TF FP16",y:"2022",p:"350 W",n:"通用训练"},
+
+  // —— 壁仞 ——
+  {v:"壁仞科技",c:"#ff6a00",name:"BR100",sub:"Chiplet",mem:32,t:"HBM2e",bw:"1.3 TB/s",fp:"672 TF FP16",y:"2022",p:"400 W",n:"FP16 极强"},
+  {v:"壁仞科技",c:"#ff6a00",name:"壁砺 166",sub:"BR166",mem:128,t:"HBM2e",bw:"—",fp:"—",y:"2025",p:"—",n:"量产升级"},
+
+  // —— 沐曦 ——
+  {v:"沐曦",c:"#ff3d81",name:"曦云 C600",sub:"MXArch",mem:64,t:"HBM2e",bw:"3.35 TB/s",fp:"384 TF FP16",y:"2025",p:"350 W",n:"超大带宽"},
+  {v:"沐曦",c:"#ff3d81",name:"曦云 C500",sub:"MXArch",mem:64,t:"HBM2e",bw:"—",fp:"240 TF FP16",y:"2024",p:"350 W",n:"训练卡"},
+  {v:"沐曦",c:"#ff3d81",name:"曦云 C700",sub:"路线图",mem:96,t:"HBM3e",bw:"—",fp:"—",y:"2026",p:"—",n:"对标 H100"},
+
+  // —— 燧原 ——
+  {v:"燧原科技",c:"#00bcd4",name:"云燧 L600",sub:"训练",mem:144,t:"HBM2e",bw:"—",fp:"320 TF FP16",y:"2024",p:"300 W",n:"对标 H20"},
+  {v:"燧原科技",c:"#00bcd4",name:"云燧 i30",sub:"推理",mem:64,t:"HBM2e",bw:"1.02 TB/s",fp:"320 TOPS INT8",y:"2022",p:"300 W",n:"云推理"},
+  {v:"燧原科技",c:"#00bcd4",name:"云燧 S60",sub:"推理",mem:64,t:"HBM2e",bw:"—",fp:"—",y:"2025",p:"—",n:"新一代推理"},
+
+  // —— 天数智芯 ——
+  {v:"天数智芯",c:"#8e44ad",name:"天垓 150",sub:"GPGPU",mem:64,t:"HBM2e",bw:"—",fp:"192 TF FP16",y:"2024",p:"250 W",n:"通用训练"},
+  {v:"天数智芯",c:"#8e44ad",name:"天垓 100",sub:"GPGPU",mem:32,t:"HBM2",bw:"1.2 TB/s",fp:"147 TF FP16",y:"2021",p:"250 W",n:"0→1 突破"},
+  {v:"天数智芯",c:"#8e44ad",name:"智铠 100",sub:"推理",mem:16,t:"DDR4",bw:"—",fp:"200 TOPS INT8",y:"2021",p:"150 W",n:"边缘推理"},
+
+  // —— 摩尔线程 ——
+  {v:"摩尔线程",c:"#2ea44f",name:"MTT S5000",sub:"夸娥",mem:64,t:"GDDR6",bw:"1.02 TB/s",fp:"280 TF FP16",y:"2024",p:"400 W",n:"训推一体"},
+  {v:"摩尔线程",c:"#2ea44f",name:"MTT S4000",sub:"",mem:48,t:"GDDR6",bw:"—",fp:"100 TF FP16",y:"2024",p:"300 W",n:"全功能 GPU"},
+
+  // —— 昆仑芯 ——
+  {v:"昆仑芯",c:"#2979ff",name:"P800",sub:"XPU-P",mem:96,t:"HBM3",bw:"—",fp:"—",y:"2024",p:"—",n:"显存优于同级"},
+  {v:"昆仑芯",c:"#2979ff",name:"P300",sub:"XPU-R",mem:64,t:"HBM2e",bw:"—",fp:"256 TF FP16",y:"2022",p:"—",n:"上一代"},
+
+  // —— 中诚华隆 ——
+  {v:"中诚华隆",c:"#607d8b",name:"HL100",sub:"AI 芯片",mem:128,t:"LPDDR5",bw:"—",fp:"256 TF FP16",y:"2025",p:"—",n:"高能效"},
+
+  // —— 英特尔 ——
+  {v:"Intel",c:"#00c7fd",name:"Gaudi 3",sub:"HL-338",mem:128,t:"HBM2e",bw:"3.7 TB/s",fp:"1.8 PF FP8",y:"2024",p:"600 W",n:"训推一体"},
+  {v:"Intel",c:"#00c7fd",name:"Gaudi 2",sub:"HL-225",mem:96,t:"HBM2e",bw:"2.45 TB/s",fp:"432 TF FP16",y:"2022",p:"600 W",n:"上一代"},
+
+  // —— Google TPU ——
+  {v:"Google",c:"#4285f4",name:"TPU v7",sub:"Ironwood",mem:192,t:"HBM3e",bw:"7.37 TB/s",fp:"4.6 PF FP8",y:"2025",p:"—",n:"推理优先"},
+  {v:"Google",c:"#4285f4",name:"TPU v6e",sub:"Trillium",mem:32,t:"HBM",bw:"1.64 TB/s",fp:"918 TF BF16",y:"2024",p:"—",n:"训推一体"},
+  {v:"Google",c:"#4285f4",name:"TPU v5p",sub:"",mem:95,t:"HBM",bw:"2.77 TB/s",fp:"459 TF BF16",y:"2023",p:"—",n:"训练优先"},
+  {v:"Google",c:"#4285f4",name:"TPU v5e",sub:"",mem:16,t:"HBM",bw:"819 GB/s",fp:"197 TF BF16",y:"2023",p:"—",n:"性价比"},
+
+  // —— AWS ——
+  {v:"AWS",c:"#ff9900",name:"Trainium 3",sub:"Trn3",mem:144,t:"HBM",bw:"—",fp:"1.3 PF BF16",y:"2025",p:"—",n:"训练 ASIC"},
+  {v:"AWS",c:"#ff9900",name:"Trainium 2",sub:"Trn2",mem:96,t:"HBM",bw:"—",fp:"667 TF BF16",y:"2024",p:"—",n:"训练 ASIC"},
+  {v:"AWS",c:"#ff9900",name:"Inferentia 2",sub:"Inf2",mem:64,t:"HBM",bw:"—",fp:"190 TF FP16",y:"2023",p:"—",n:"推理 ASIC"},
+
+  // —— 微软 ——
+  {v:"微软",c:"#00a4ef",name:"Maia 100",sub:"",mem:64,t:"HBM2e",bw:"1.6 TB/s",fp:"—",y:"2024",p:"500 W",n:"自研推理"},
+
+  // —— Cerebras / Groq ——
+  {v:"Cerebras",c:"#ff5722",name:"WSE-3",sub:"晶圆级",mem:44,t:"片上 SRAM",bw:"21 PB/s",fp:"125 PF FP16",y:"2024",p:"—",n:"整片晶圆"},
+  {v:"Cerebras",c:"#ff5722",name:"WSE-2",sub:"晶圆级",mem:40,t:"片上 SRAM",bw:"20 PB/s",fp:"62 PF FP16",y:"2021",p:"—",n:"整片晶圆"},
+  {v:"Groq",c:"#7c4dff",name:"LPU",sub:"Language Processing",mem:0.23,t:"片上 SRAM",bw:"—",fp:"—",y:"2024",p:"—",n:"推理 ASIC"},
+];
+/*__DATA_END__*/
+// ===== 工具函数 =====
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function tier(m){
+  if(m >= 288) return 5;
+  if(m >= 192) return 4;
+  if(m >= 128) return 3;
+  if(m >= 64)  return 2;
+  if(m >= 32)  return 1;
+  return 0;
+}
+function fmtMem(m){
+  if(m >= 1000) return (m/1000).toFixed(1)+'<small> TB</small>';
+  if(m < 1) return m.toFixed(2)+'<small> GB</small>';
+  return Math.round(m)+'<small> GB</small>';
+}
+
+// ===== 状态 =====
+let state = {
+  q: '', vendor: '', type: '', tier: '', sort: 'mem-desc', sortDir: -1
+};
+
+// ===== 填充筛选下拉 =====
+const vendors = [...new Set(DATA.map(d => d.v))];
+const types = [...new Set(DATA.map(d => d.t))].filter(Boolean);
+const vSel = document.getElementById('fVendor');
+const tSel = document.getElementById('fType');
+vendors.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; vSel.appendChild(o); });
+types.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; tSel.appendChild(o); });
+
+// ===== 过滤 + 排序 =====
+function filtered(){
+  let list = DATA.filter(d => {
+    if(state.vendor && d.v !== state.vendor) return false;
+    if(state.type && d.t !== state.type) return false;
+    if(state.tier !== '' && tier(d.mem) !== +state.tier) return false;
+    if(state.q){
+      const s = (d.v + ' ' + d.name + ' ' + (d.sub||'') + ' ' + (d.n||'')).toLowerCase();
+      if(!s.includes(state.q.toLowerCase())) return false;
+    }
+    return true;
+  });
+  const byYear = d => d.y === '—' ? 0 : +d.y;
+  if(state.sort === 'mem-desc') list.sort((a,b) => b.mem - a.mem);
+  else if(state.sort === 'mem-asc') list.sort((a,b) => a.mem - b.mem);
+  else if(state.sort === 'vendor') list.sort((a,b) => a.v.localeCompare(b.v,'zh') || b.mem - a.mem);
+  else if(state.sort === 'year-desc') list.sort((a,b) => byYear(b) - byYear(a) || b.mem - a.mem);
+  return list;
+}
+
+// ===== 渲染表 =====
+function renderTable(){
+  const list = filtered();
+  const tb = document.getElementById('tbody');
+  document.getElementById('empty').style.display = list.length ? 'none' : 'block';
+  document.getElementById('tableCount').textContent = '共 ' + list.length + ' 款';
+  tb.innerHTML = list.map(d => {
+    const t = tier(d.mem);
+    return `<tr>
+      <td><span class="vendor-badge" style="background:${d.c}">${esc(d.v)}</span></td>
+      <td><div class="model">${esc(d.name)}<span class="sub">${esc(d.sub||'')}</span></div></td>
+      <td><span class="mem t-${t}">${fmtMem(d.mem)}</span></td>
+      <td><span class="memtype">${esc(d.t)}</span></td>
+      <td><span class="bw">${esc(d.bw)}</span></td>
+      <td><span class="fp">${esc(d.fp)}</span></td>
+      <td><span class="meta">${esc(d.y)}<br>${esc(d.p)}</span></td>
+      <td><span class="note">${esc(d.n||'')}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ===== 渲染排行榜 =====
+function renderChart(){
+  const top = [...DATA].sort((a,b) => b.mem - a.mem).slice(0,20);
+  const max = top[0].mem;
+  document.getElementById('chart').innerHTML = top.map(d => {
+    const w = (d.mem / max * 100).toFixed(1);
+    return `<div class="bar-row">
+      <div class="name" title="${esc(d.v+' '+d.name)}">${esc(d.v+' '+d.name)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div>
+      <div class="val">${d.mem >= 1000 ? (d.mem/1000).toFixed(1)+'TB' : Math.round(d.mem)+'GB'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== 统计 =====
+function renderStats(){
+  document.getElementById('statCount').textContent = DATA.length;
+  document.getElementById('statVendor').textContent = vendors.length;
+  const max = Math.max(...DATA.map(d => d.mem));
+  document.getElementById('statMax').innerHTML = fmtMem(max);
+  const avg = DATA.reduce((s,d) => s + d.mem, 0) / DATA.length;
+  document.getElementById('statAvg').innerHTML = fmtMem(avg);
+}
+
+// ===== 事件绑定 =====
+document.getElementById('q').addEventListener('input', e => { state.q = e.target.value; renderTable(); });
+vSel.addEventListener('change', e => { state.vendor = e.target.value; renderTable(); });
+tSel.addEventListener('change', e => { state.type = e.target.value; renderTable(); });
+document.getElementById('fTier').addEventListener('change', e => { state.tier = e.target.value; renderTable(); });
+document.getElementById('fSort').addEventListener('change', e => { state.sort = e.target.value; renderTable(); });
+
+// 表头点击排序（切换显存升降序）
+document.querySelector('thead th.sortable').addEventListener('click', function(){
+  const arr = this.querySelector('.arr');
+  if(state.sort === 'mem-desc'){
+    state.sort = 'mem-asc';
+    arr.textContent = '↑';
+  } else {
+    state.sort = 'mem-desc';
+    arr.textContent = '↓';
+  }
+  document.getElementById('fSort').value = state.sort;
+  renderTable();
+});
+
+// ===== 初始化 =====
+renderStats();
+renderChart();
+renderTable();
+</script>
+</body>
+</html>
